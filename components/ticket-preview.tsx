@@ -24,8 +24,11 @@ export function TicketPreview({ config, ticketData }: TicketPreviewProps) {
   useEffect(() => {
     if (canvasRef.current) {
       // Generar URL completa para el QR
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
+                      (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
       const qrUrl = `${baseUrl}/verify/${data.id}`
+
+      console.log('QR URL generada:', qrUrl) // Debug
 
       QRCode.toCanvas(canvasRef.current, qrUrl, {
         width: 120,
